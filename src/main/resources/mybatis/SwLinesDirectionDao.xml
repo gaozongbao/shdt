@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.c.dao.SwLinesDirectionDao">
+  <resultMap id="BaseResultMap" type="com.c.model.SwLinesDirection">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <result column="id" jdbcType="INTEGER" property="id" />
+    <result column="date" jdbcType="VARCHAR" property="date" />
+    <result column="line" jdbcType="VARCHAR" property="line" />
+    <result column="direction" jdbcType="VARCHAR" property="direction" />
+  </resultMap>
+
+
+  <select id="getAllRoutesAndDirection" resultType="Map">
+    SELECT s.line,GROUP_CONCAT(s.direction) dirs FROM sw_lines_direction s
+    WHERE s.date=(SELECT MAX(s.date) FROM sw_lines_direction)
+    GROUP BY s.line
+  </select>
+  <select id="getBoundaries" resultType="Map">
+    SELECT CONCAT(n.longitude,",",n.latitude) lonlat FROM node_menu n
+    WHERE n.line=#{line}
+    ORDER BY CAST(n.globalnodeindex AS SIGNED)
+  </select>
+  <select id="getStationInfo" resultType="Map">
+    SELECT n.longitude,n.latitude,n.line,n.stationindex,n.id,n.stationname FROM station_menu n
+    WHERE n.line=#{line}
+    ORDER BY CAST(n.stationindex AS SIGNED)
+  </select>
+
+
+
+</mapper>

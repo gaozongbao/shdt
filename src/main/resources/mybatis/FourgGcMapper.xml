@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.c.dao.FourgGcMapper">
+  <resultMap id="BaseResultMap" type="com.c.model.FourgGc">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <result column="id" jdbcType="INTEGER" property="id" />
+    <result column="districtandcounty" jdbcType="VARCHAR" property="districtandcounty" />
+    <result column="enodeb" jdbcType="VARCHAR" property="enodeb" />
+    <result column="cellname" jdbcType="VARCHAR" property="cellname" />
+    <result column="localcellid" jdbcType="VARCHAR" property="localcellid" />
+    <result column="cgi" jdbcType="VARCHAR" property="cgi" />
+    <result column="tac" jdbcType="VARCHAR" property="tac" />
+    <result column="pci" jdbcType="VARCHAR" property="pci" />
+    <result column="mod3" jdbcType="INTEGER" property="mod3" />
+    <result column="longitude" jdbcType="DOUBLE" property="longitude" />
+    <result column="latitude" jdbcType="DOUBLE" property="latitude" />
+    <result column="cellpower" jdbcType="DOUBLE" property="cellpower" />
+    <result column="electronictiltangle" jdbcType="DOUBLE" property="electronictiltangle" />
+    <result column="mechanicaltiltangle" jdbcType="DOUBLE" property="mechanicaltiltangle" />
+    <result column="totaldowntiltangle" jdbcType="DOUBLE" property="totaldowntiltangle" />
+    <result column="azimuth" jdbcType="DOUBLE" property="azimuth" />
+    <result column="antennaheight" jdbcType="DOUBLE" property="antennaheight" />
+    <result column="devicestatus" jdbcType="VARCHAR" property="devicestatus" />
+    <result column="managestatus" jdbcType="VARCHAR" property="managestatus" />
+    <result column="coveragetype" jdbcType="VARCHAR" property="coveragetype" />
+    <result column="coverscene" jdbcType="VARCHAR" property="coverscene" />
+    <result column="cellbandwidth" jdbcType="INTEGER" property="cellbandwidth" />
+    <result column="workfrequencyband" jdbcType="VARCHAR" property="workfrequencyband" />
+    <result column="carrierffrequencynum" jdbcType="INTEGER" property="carrierffrequencynum" />
+    <result column="carrierffrequencycount" jdbcType="INTEGER" property="carrierffrequencycount" />
+    <result column="maintenancedepartment" jdbcType="VARCHAR" property="maintenancedepartment" />
+    <result column="vendor" jdbcType="VARCHAR" property="vendor" />
+    <result column="grid" jdbcType="VARCHAR" property="grid" />
+    <result column="address" jdbcType="VARCHAR" property="address" />
+    <result column="interdimensionalstate" jdbcType="VARCHAR" property="interdimensionalstate" />
+    <result column="ltebasestationlocalname" jdbcType="VARCHAR" property="ltebasestationlocalname" />
+    <result column="coverdistance" jdbcType="DOUBLE" property="coverdistance" />
+    <result column="halfpowerangle" jdbcType="DOUBLE" property="halfpowerangle" />
+  </resultMap>
+
+
+  <select id="getAllCellInfo" resultType="Map" >
+    SELECT f.id,f.cellname,f.longitude,f.latitude,f.azimuth,f.coveragetype FROM fourg_gc f
+  </select>
+  <select id="getAllCellInfoById" resultType="Map" >
+    SELECT * FROM fourg_gc f
+    where f.id =#{id}
+  </select>
+
+  <select id="getAllSanGe" resultType="map">
+    SELECT g.id `value` ,g.gridid `name`,g.latitude,g.longitude FROM grid g
+  </select>
+
+</mapper>

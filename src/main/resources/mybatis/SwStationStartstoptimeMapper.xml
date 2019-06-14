@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.c.dao.SwStationStartstoptimeMapper">
+  <resultMap id="BaseResultMap" type="com.c.model.SwStationStartstoptime">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <result column="id" jdbcType="INTEGER" property="id" />
+    <result column="date" jdbcType="VARCHAR" property="date" />
+    <result column="stationname" jdbcType="VARCHAR" property="stationname" />
+    <result column="line" jdbcType="VARCHAR" property="line" />
+    <result column="direction" jdbcType="VARCHAR" property="direction" />
+    <result column="intime" jdbcType="VARCHAR" property="intime" />
+    <result column="outtime" jdbcType="VARCHAR" property="outtime" />
+    <result column="stopstime" jdbcType="VARCHAR" property="stopstime" />
+    <result column="runstime" jdbcType="VARCHAR" property="runstime" />
+    <result column="linestation" jdbcType="VARCHAR" property="linestation" />
+  </resultMap>
+
+
+  <select id="getStartStopData" resultType="Map" parameterType="map">
+    SELECT * FROM sw_station_startstoptime s
+    WHERE s.line=#{line} AND s.direction=#{direction}
+    ORDER BY s.intime
+  </select>
+
+
+</mapper>
