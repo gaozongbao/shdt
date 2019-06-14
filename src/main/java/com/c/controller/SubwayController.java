@@ -47,11 +47,16 @@ public class SubwayController {
     @RequestMapping("/subway/allCellInfo")
     @ResponseBody
     public ResponseEntity getAllCellInfo(String gridid){
-        Integer id=null;
+        List<Map<String, Object>> allCellInfo = new ArrayList<>();
         if(StringUtils.isNotBlank(gridid)){
-            id = Integer.parseInt(gridid);
+            for(String item :gridid.split(",")){
+                Integer id = Integer.parseInt(item);
+                allCellInfo.addAll(subwayService.getAllCellInfo(id));
+            }
+        }else{
+            allCellInfo.addAll(subwayService.getAllCellInfo(null));
         }
-        return  ResponseEntity.successResponse(subwayService.getAllCellInfo(id), "success");
+        return  ResponseEntity.successResponse(allCellInfo, "success");
     }
     @RequestMapping("/subway/getAllSanGe")
     @ResponseBody
