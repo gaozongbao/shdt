@@ -1,11 +1,13 @@
 package com.c.service;
 
+import org.apache.ibatis.annotations.Param;
+
 import java.util.List;
 import java.util.Map;
 
 public interface SubwayService {
     public List<Map<String,Object>> getAllRoutes();
-    public List<Map<String,Object>> getAllCellInfo();
+    public List<Map<String,Object>> getAllCellInfo(@Param("gridid") Integer gridid);
     public List<Map<String,Object>> getAllSanGe();
     public List<Map<String,Object>> getAllCellInfoById(Integer id);
 

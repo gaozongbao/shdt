@@ -39,8 +39,8 @@ public class SubwayServiceImpl implements SubwayService {
     }
 
     @Override
-    public List<Map<String, Object>> getAllCellInfo() {
-        return fourgGcMapper.getAllCellInfo();
+    public List<Map<String, Object>> getAllCellInfo(Integer gridid) {
+        return fourgGcMapper.getAllCellInfo( gridid);
     }
 
     @Override

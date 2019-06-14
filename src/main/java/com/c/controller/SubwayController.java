@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.c.service.SubwayService;
 import com.c.util.ResponseEntity;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -45,9 +46,12 @@ public class SubwayController {
     }
     @RequestMapping("/subway/allCellInfo")
     @ResponseBody
-    public ResponseEntity getAllCellInfo(){
-
-        return  ResponseEntity.successResponse(subwayService.getAllCellInfo(), "success");
+    public ResponseEntity getAllCellInfo(String gridid){
+        Integer id=null;
+        if(StringUtils.isNotBlank(gridid)){
+            id = Integer.parseInt(gridid);
+        }
+        return  ResponseEntity.successResponse(subwayService.getAllCellInfo(id), "success");
     }
     @RequestMapping("/subway/getAllSanGe")
     @ResponseBody
