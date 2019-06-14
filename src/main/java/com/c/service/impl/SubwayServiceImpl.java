@@ -85,21 +85,30 @@ public class SubwayServiceImpl implements SubwayService {
         List<Map<String, Object>> speeds = swStationSpeedMapper.getSpeedByLine(param);
         List<Map<String,Object>> speedRes = new ArrayList<>();
         List<Map<String,Object>> speedPlusRes = new ArrayList<>();
+        List<Map<String,Object>> startStopData = new ArrayList<>();
         for (Map<String, Object> item:speeds){
+            /*******************速度曲线*********************************/
             Map<String,Object> speedItem = new HashMap<>();
             speedItem.put("time",item.get("time"));
             speedItem.put("value",item.get("currentspeed"));
             speedRes.add(speedItem);
+            /********************加速度曲线********************************/
             Map<String,Object> speedPlusItem = new HashMap<>();
             speedPlusItem.put("time",item.get("time"));
             speedPlusItem.put("value",item.get("acceleration"));
             speedPlusRes.add(speedPlusItem);
+            /********************启停曲线*********************************/
+            Map<String,Object> startStopDataItem = new HashMap<>();
+            startStopDataItem.put("time",item.get("time"));
+            startStopDataItem.put("value",item.get("driverstatus"));
+            startStopData.add(startStopDataItem);
+
         }
         res.put("speed",speedRes);
         res.put("speedPlus",speedPlusRes);
 
         //启停数据
-        List<Map<String, Object>> startStopData = swStationStartstoptimeMapper.getStartStopData(param);
+        //List<Map<String, Object>> startStopData = swStationStartstoptimeMapper.getStartStopData(param);
         res.put("moveTime",startStopData);
 
         //采样分布
