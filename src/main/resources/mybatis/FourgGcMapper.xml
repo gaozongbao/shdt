@@ -54,7 +54,7 @@
   </select>
 
   <select id="getAllSanGe" resultType="map">
-    SELECT g.id `value` ,g.gridid `name`,g.latitude,g.longitude,g.boundaries FROM grid g
+    SELECT g.id  ,g.gridid `name`,g.latitude,g.longitude,g.boundaries FROM grid g
   </select>
 
 </mapper>
