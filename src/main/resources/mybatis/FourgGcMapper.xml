@@ -42,7 +42,7 @@
 
 
   <select id="getAllCellInfo" resultType="Map" >
-    SELECT f.id,f.cellname,f.longitude,f.latitude,f.azimuth,f.coveragetype FROM fourg_gc f
+    SELECT f.id,f.cellname,f.longitude,f.latitude,f.azimuth,f.coveragetype,f.cgi,f.cellpower FROM fourg_gc f
     where 1=1
     <if test="gridid!=null">
       and f.grid =#{gridid}
