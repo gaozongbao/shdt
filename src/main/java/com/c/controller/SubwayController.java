@@ -37,7 +37,11 @@ public class SubwayController {
             Map<String,Object> param = new HashMap<>();
             param.put("line",item);
             param.put("operator",operator);
-            param.put("pattern",pattern);
+            if(StringUtils.isBlank(pattern)){
+                param.put("pattern","ALL");
+            }else{
+                param.put("pattern",pattern);
+            }
             param.put("direction",direction);
             Map<String, Object> allDataBySubway = subwayService.getAllDataBySubway(param);
             res.add(allDataBySubway);

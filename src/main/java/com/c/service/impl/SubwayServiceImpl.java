@@ -112,24 +112,25 @@ public class SubwayServiceImpl implements SubwayService {
         res.put("moveTime",startStopData);
 
         //采样分布
-        String [] arr=new String[]{"移动-TDD/FDD/GSM","联通-TDD/FDD","电信-TDD/FDD"};
+        //获取对应制式采样分布
+        param.put("type",0);
+        List<Map<String, Object>> saoPinSample = swSaopinAddrDao.getSaoPinSample(param);
+        res.put("sample",saoPinSample);
+
+        String [] arr=new String[]{"移动-TDD/FDD/GSM/ALL/TPS/FPN","联通-TDD/FDD/ALL","电信-TDD/FDD/ALL"};
         for(String str :arr){
             String op = str.split("-")[0];
             String [] types = str.split("-")[1].split("/");
             Map<String,Object> sampleRes = new HashMap<>();
             for(String type:types){
-                Map<String,Object> sampleParam = new HashMap<>();
-                sampleParam.put("line",line);
-                sampleParam.put("direction",param.get("direction"));
-                sampleParam.put("operator",op);
-                sampleParam.put("pattern",type);
-                sampleParam.put("type",0);
-                //获取对应制式采样分布
-                List<Map<String, Object>> saoPinSample = swSaopinAddrDao.getSaoPinSample(sampleParam);
-                sampleRes.put(type.toLowerCase(),saoPinSample);
                 //获取对应制式 覆盖率
-                sampleParam.put("type",1);
-                List<Map<String, Object>> saoPinCoverRate = swSaopinAddrDao.getSaoPinSample(sampleParam);
+                Map<String,Object> coverParam = new HashMap<>();
+                coverParam.put("line",line);
+                coverParam.put("direction",param.get("direction"));
+                coverParam.put("operator",op);
+                coverParam.put("pattern",type);
+                coverParam.put("type",1);
+                List<Map<String, Object>> saoPinCoverRate = swSaopinAddrDao.getSaoPinSample(coverParam);
                 if(saoPinCoverRate.size()>0){
                     sampleRes.put(type.toLowerCase()+"Cover",saoPinCoverRate.get(0).get("value"));
                 }else{
