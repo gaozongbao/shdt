@@ -61,7 +61,15 @@ public class SubwayServiceImpl implements SubwayService {
         res.put("direction",param.get("direction"));
 
         //拐点信息 获取
-        List<Map<String, Object>> boundaries = swLinesDirectionDao.getBoundaries(line);
+        //由于前端给的线路带() 所以先处理
+        String dealLine=line;
+        if(dealLine.indexOf("(")!=-1){
+            dealLine = dealLine.substring(0,dealLine.indexOf("("));
+        }else if(dealLine.indexOf("（")!=-1){
+            dealLine = dealLine.substring(0,dealLine.indexOf("（"));
+        }
+
+        List<Map<String, Object>> boundaries = swLinesDirectionDao.getBoundaries(dealLine);
         String boundariesStr="";
         for (Map<String, Object> item:boundaries){
             boundariesStr += (item.get("lonlat").toString()+";");
@@ -72,7 +80,7 @@ public class SubwayServiceImpl implements SubwayService {
         res.put("boundaries",new Object[]{boundariesStr});
 
         //站点信息
-        List<Map<String, Object>> stationInfo = swLinesDirectionDao.getStationInfo(line);
+        List<Map<String, Object>> stationInfo = swLinesDirectionDao.getStationInfo(dealLine);
         res.put("stationInfo",stationInfo);
 
 
