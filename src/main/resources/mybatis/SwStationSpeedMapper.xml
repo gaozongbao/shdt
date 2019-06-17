@@ -16,7 +16,7 @@
 
 
   <select id="getSpeedByLine" resultType="Map" parameterType="map">
-    SELECT * FROM sw_station_speed s
+   SELECT s.id,s.acceleration,ABS(s.currentspeed) currentspeed,s.driverstatus FROM sw_station_speed s
     WHERE s.line=#{line} AND s.direction=#{direction}
     ORDER BY s.time
   </select>
