@@ -3,6 +3,7 @@ package com.c.controller;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.c.service.SubwayService;
+import com.c.syslog.SysLog;
 import com.c.util.ResponseEntity;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,12 +23,13 @@ import java.util.Map;
 public class SubwayController {
     @Autowired
     private SubwayService subwayService;
-
+    @SysLog("获取所有线路")
     @RequestMapping("/subway/getAllRoutes")
     @ResponseBody
     public ResponseEntity getAllRoutes(){
         return  ResponseEntity.successResponse(subwayService.getAllRoutes(), "success");
     }
+    @SysLog("地体模块页面初始化")
     @RequestMapping("/subway/initData")
     @ResponseBody
     public ResponseEntity initData(String operator,String pattern,@RequestParam(value = "line", required = true)String line,String direction){
@@ -48,6 +50,7 @@ public class SubwayController {
         }
         return  ResponseEntity.successResponse(res, "success");
     }
+    @SysLog("所有小区")
     @RequestMapping("/subway/allCellInfo")
     @ResponseBody
     public ResponseEntity getAllCellInfo(String gridid){
@@ -62,12 +65,14 @@ public class SubwayController {
         }
         return  ResponseEntity.successResponse(allCellInfo, "success");
     }
+    @SysLog("所有栅格")
     @RequestMapping("/subway/getAllSanGe")
     @ResponseBody
     public ResponseEntity getAllSanGe(){
 
         return  ResponseEntity.successResponse(subwayService.getAllSanGe(), "success");
     }
+    @SysLog("小区详情")
     @RequestMapping("/subway/cellInfo")
     @ResponseBody
     public ResponseEntity cellInfo(@RequestParam(value = "id", required = true)Integer id){
