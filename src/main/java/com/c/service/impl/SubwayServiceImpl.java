@@ -63,6 +63,7 @@ public class SubwayServiceImpl implements SubwayService {
         //拐点信息 获取
         //由于前端给的线路带() 所以先处理
         String dealLine=line;
+        res.put("linenum",dealLine);
         if(dealLine.indexOf("(")!=-1){
             dealLine = dealLine.substring(0,dealLine.indexOf("("));
         }else if(dealLine.indexOf("（")!=-1){
