@@ -86,6 +86,18 @@ public class SubwayServiceImpl implements SubwayService {
 
         //扫频点信息
         List<Map<String, Object>> saoPinInfo = swSaopinAddrDao.getSaoPinInfo(param);
+        for (Map<String, Object> item:saoPinInfo) {
+            if(item.get("ids")!=null){
+                String[] ids = item.get("ids").toString().split(",");
+                for(String idkey:ids){
+                    if(item.get("rsrp")!=null&&idkey.indexOf(item.get("rsrp").toString())!=-1){
+                        item.put("id",idkey.split(":")[0]);
+                        item.remove("ids");
+                        break;
+                    }
+                }
+            }
+        }
         res.put("saoPinInfo",saoPinInfo);
 
 
