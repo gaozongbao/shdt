@@ -16,8 +16,9 @@
 
 
   <select id="getSpeedByLine" resultType="Map" parameterType="map">
-   SELECT s.id,s.acceleration,ABS(s.currentspeed) currentspeed,s.driverstatus,s.time FROM sw_station_speed s
+    SELECT MAX(s.id) id,MAX(s.acceleration) acceleration,MAX(ABS(s.currentspeed)) currentspeed,MAX(s.driverstatus) driverstatus,Max(SUBSTR(s.time,1,8)) `time` FROM sw_station_speed s
     WHERE s.line=#{line} AND s.direction=#{direction}
-    ORDER BY s.time
+    GROUP BY SUBSTR(s.time,1,8)
+    ORDER BY `time`
   </select>
 </mapper>
