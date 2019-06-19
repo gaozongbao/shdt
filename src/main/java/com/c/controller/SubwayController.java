@@ -78,9 +78,5 @@ public class SubwayController {
     public ResponseEntity cellInfo(@RequestParam(value = "id", required = true)Integer id){
         return  ResponseEntity.successResponse(subwayService.getAllCellInfoById(id), "success");
     }
-    @RequestMapping("/")
-    public String index(){
-        return  "redirect:shanghai-demo/page/metro.html";
-    }
 
 }

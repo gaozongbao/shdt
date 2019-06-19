@@ -23,9 +23,16 @@
     ORDER BY CAST(n.globalnodeindex AS SIGNED)
   </select>
   <select id="getStationInfo" resultType="Map">
-    SELECT n.longitude,n.latitude,n.line,n.stationindex,n.id,n.stationname FROM station_menu n
+    SELECT n.longitude,n.latitude,n.line,n.stationindex,n.id,n.stationname,IF(b.num IS NULL,2,1) isLast FROM station_menu n
+    LEFT JOIN
+    (
+    SELECT MAX(CAST(n.stationindex AS SIGNED)) num FROM station_menu n
+    WHERE n.line=#{line} AND n.desc IS NOT NULL
+    GROUP BY n.desc
+    ) b ON b.num=n.stationindex
     WHERE n.line=#{line}
     ORDER BY CAST(n.stationindex AS SIGNED)
+
   </select>
 
 

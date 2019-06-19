@@ -16,9 +16,19 @@
 
 
   <select id="getSpeedByLine" resultType="Map" parameterType="map">
-    SELECT MAX(s.id) id,MAX(s.acceleration) acceleration,MAX(ABS(s.currentspeed)) currentspeed,MAX(s.driverstatus) driverstatus,Max(SUBSTR(s.time,1,8)) `time` FROM sw_station_speed s
-    WHERE s.line=#{line} AND s.direction=#{direction}
-    GROUP BY SUBSTR(s.time,1,8)
-    ORDER BY `time`
+
+    SELECT a.time,a.acceleration,a.currentspeed,a.driverstatus,IFNULL(b.rsrp,-140) rsrp,b.longitude,b.latitude
+    FROM(
+        SELECT s.time,s.acceleration,s.currentspeed,s.driverstatus FROM sw_station_speed s
+        WHERE s.line=#{line} AND s.direction=#{direction} AND s.date=(SELECT MAX(`date`) FROM sw_station_speed)
+    )a
+    LEFT JOIN (
+    SELECT b.time,b.rsrp,b.longitude,b.latitude  FROM sw_station_chart_rsrp_data b
+    WHERE b.date=(SELECT MAX(`date`) FROM sw_station_chart_rsrp_data)
+    AND b.line=#{line} AND b.direction=#{direction}
+    AND b.operator=#{operator} AND b.pattern=#{pattern}
+    ) b ON a.time =b.time
+    ORDER BY `time`;
+
   </select>
 </mapper>

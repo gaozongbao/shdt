@@ -71,7 +71,22 @@ public class SubwayServiceImpl implements SubwayService {
         }
         res.put("linenum",dealLine);
 
-        List<Map<String, Object>> boundaries = swLinesDirectionDao.getBoundaries(dealLine);
+        String imgUrl="/shdt/images/"+dealLine+".JPG";
+        //返回图片路径
+        if(line.indexOf("M10")!=-1&&line.indexOf("虹桥")!=-1){
+            imgUrl="/shdt/images/M10(虹桥方向).JPG";
+        }else if(line.indexOf("M10")!=-1&&line.indexOf("虹桥")==-1){
+            imgUrl="/shdt/images/M10(航中路方向).jpg";
+        }else if(line.indexOf("M11")!=-1&&line.indexOf("嘉定")!=-1){
+            imgUrl="/shdt/images/M11(嘉定北方向).jpg";
+        }else if(line.indexOf("M11")!=-1&&line.indexOf("嘉定")==-1){
+            imgUrl="/shdt/images/M11(花桥方向).jpg";
+        }
+        res.put("imgUrl",imgUrl);
+
+
+        //不需要返回 节点信息
+       /* List<Map<String, Object>> boundaries = swLinesDirectionDao.getBoundaries(dealLine);
         String boundariesStr="";
         for (Map<String, Object> item:boundaries){
             boundariesStr += (item.get("lonlat").toString()+";");
@@ -79,10 +94,26 @@ public class SubwayServiceImpl implements SubwayService {
         if(StringUtils.isNotBlank(boundariesStr)){
             boundariesStr =boundariesStr.substring(0,boundariesStr.length()-1);
         }
+
         res.put("boundaries",new Object[]{boundariesStr});
+        */
+
 
         //站点信息
         List<Map<String, Object>> stationInfo = swLinesDirectionDao.getStationInfo(dealLine);
+        boolean isNormal =true;
+        for(Map<String, Object> item:stationInfo){
+            if(item.get("isLast").toString().equals("1")){
+                isNormal =false;
+                break;
+            }
+        }
+        //如果是正常路线 终点站没有标识1 如果后去最后一个作为终点站
+        if(isNormal&&stationInfo.size()>0){
+            Map<String, Object> routes = stationInfo.get(stationInfo.size() - 1);
+            routes.put("isLast",1);
+        }
+
         res.put("stationInfo",stationInfo);
 
 
@@ -108,6 +139,7 @@ public class SubwayServiceImpl implements SubwayService {
         List<Map<String,Object>> speedRes = new ArrayList<>();
         List<Map<String,Object>> speedPlusRes = new ArrayList<>();
         List<Map<String,Object>> startStopData = new ArrayList<>();
+        List<Map<String,Object>> rsrpData = new ArrayList<>();
         for (Map<String, Object> item:speeds){
             /*******************速度曲线*********************************/
             Map<String,Object> speedItem = new HashMap<>();
@@ -125,9 +157,17 @@ public class SubwayServiceImpl implements SubwayService {
             startStopDataItem.put("value",item.get("driverstatus"));
             startStopData.add(startStopDataItem);
 
+            /********************rsrp*********************************/
+            Map<String,Object> rsrpDataItem = new HashMap<>();
+            rsrpDataItem.put("time",item.get("time"));
+            rsrpDataItem.put("value",item.get("rsrp"));
+            rsrpDataItem.put("lon",item.get("longitude"));
+            rsrpDataItem.put("lat",item.get("latitude"));
+            rsrpData.add(rsrpDataItem);
         }
         res.put("speed",speedRes);
         res.put("speedPlus",speedPlusRes);
+        res.put("rsrpChart",rsrpData);
 
         //启停数据
         //List<Map<String, Object>> startStopData = swStationStartstoptimeMapper.getStartStopData(param);
