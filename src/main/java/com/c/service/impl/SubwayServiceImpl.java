@@ -140,6 +140,7 @@ public class SubwayServiceImpl implements SubwayService {
         List<Map<String,Object>> speedPlusRes = new ArrayList<>();
         List<Map<String,Object>> startStopData = new ArrayList<>();
         List<Map<String,Object>> rsrpData = new ArrayList<>();
+        int i=0;
         for (Map<String, Object> item:speeds){
             /*******************速度曲线*********************************/
             Map<String,Object> speedItem = new HashMap<>();
@@ -159,11 +160,19 @@ public class SubwayServiceImpl implements SubwayService {
 
             /********************rsrp*********************************/
             Map<String,Object> rsrpDataItem = new HashMap<>();
+            if((item.get("longitude")==null||item.get("latitude")==null)&&i>0){
+                rsrpDataItem.put("value",rsrpData.get(i-1).get("value"));
+                rsrpDataItem.put("lon",rsrpData.get(i-1).get("lon"));
+                rsrpDataItem.put("lat",rsrpData.get(i-1).get("lat"));
+            }else{
+                rsrpDataItem.put("value",item.get("rsrp"));
+                rsrpDataItem.put("lon",item.get("longitude"));
+                rsrpDataItem.put("lat",item.get("latitude"));
+
+            }
             rsrpDataItem.put("time",item.get("time"));
-            rsrpDataItem.put("value",item.get("rsrp"));
-            rsrpDataItem.put("lon",item.get("longitude"));
-            rsrpDataItem.put("lat",item.get("latitude"));
             rsrpData.add(rsrpDataItem);
+            i++;
         }
         res.put("speed",speedRes);
         res.put("speedPlus",speedPlusRes);
