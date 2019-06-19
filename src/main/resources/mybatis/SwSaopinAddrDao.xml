@@ -32,12 +32,12 @@
   <select id="getSaoPinInfo" resultType="Map" parameterType="map">
       SELECT s.latitude lat,s.longitude lon,MAX(s.r0_rp) rsrp,GROUP_CONCAT(CONCAT_WS(':',s.id,s.r0_rp)) ids FROM sw_saopin_addr s
       WHERE s.line=#{line} AND s.direction=#{direction} AND s.operator=#{operator}
-      <if test="pattern !=null and pattern!= '' ">
+      <if test="pattern !='ALL' ">
           AND s.pattern=#{pattern}
       </if>
       AND s.date =(SELECT MAX(s.date) FROM sw_saopin_addr s)
       GROUP BY s.timestamp,s.longitude,s.latitude,s.operator
-      <if test="pattern !=null and pattern!= '' ">
+      <if test="pattern !='ALL' ">
           ,s.pattern
       </if>
 
