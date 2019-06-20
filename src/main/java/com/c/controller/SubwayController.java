@@ -13,6 +13,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.net.ssl.HttpsURLConnection;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -32,10 +35,12 @@ public class SubwayController {
     @SysLog("地体模块页面初始化")
     @RequestMapping("/subway/initData")
     @ResponseBody
-    public ResponseEntity initData(String operator,String pattern,@RequestParam(value = "line", required = true)String line,String direction){
+    public ResponseEntity initData(String operator, String pattern, @RequestParam(value = "line", required = true)String line, String direction, HttpServletRequest request){
         String[] lines = line.split(",");
         List<Map<String,Object>> res = new ArrayList<>();
         long s = System.currentTimeMillis();
+        String severPath =request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort();
+
         for (String item: lines) {
             Map<String,Object> param = new HashMap<>();
             param.put("line",item);
@@ -46,6 +51,7 @@ public class SubwayController {
                 param.put("pattern",pattern);
             }
             param.put("direction",direction);
+            param.put("severPath",severPath);
             Map<String, Object> allDataBySubway = subwayService.getAllDataBySubway(param);
             res.add(allDataBySubway);
         }

@@ -82,7 +82,7 @@ public class SubwayServiceImpl implements SubwayService {
         }else if(line.indexOf("M11")!=-1&&line.indexOf("嘉定")==-1){
             imgUrl="/shdt/images/M11(花桥方向).jpg";
         }
-        res.put("imgUrl",imgUrl);
+        res.put("imgUrl",param.get("severPath").toString()+imgUrl);
 
 
         //不需要返回 节点信息
