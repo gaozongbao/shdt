@@ -35,6 +35,7 @@ public class SubwayController {
     public ResponseEntity initData(String operator,String pattern,@RequestParam(value = "line", required = true)String line,String direction){
         String[] lines = line.split(",");
         List<Map<String,Object>> res = new ArrayList<>();
+        long s = System.currentTimeMillis();
         for (String item: lines) {
             Map<String,Object> param = new HashMap<>();
             param.put("line",item);
@@ -48,6 +49,7 @@ public class SubwayController {
             Map<String, Object> allDataBySubway = subwayService.getAllDataBySubway(param);
             res.add(allDataBySubway);
         }
+        System.out.println("时间--->"+(System.currentTimeMillis()-s));
         return  ResponseEntity.successResponse(res, "success");
     }
     @SysLog("所有小区")
