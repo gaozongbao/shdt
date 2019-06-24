@@ -30,7 +30,7 @@
 
 
   <select id="getSaoPinInfo" resultType="Map" parameterType="map">
-     <!--SELECT s.latitude lat,s.longitude lon,MAX(s.r0_rp) rsrp,GROUP_CONCAT(CONCAT_WS(':',s.id,s.r0_rp)) ids FROM sw_saopin_addr s
+     SELECT s.latitude lat,s.longitude lon,MAX(s.r0_rp) rsrp,GROUP_CONCAT(CONCAT_WS(':',s.id,s.r0_rp)) ids FROM sw_saopin_addr s
       WHERE s.line=#{line} AND s.direction=#{direction} AND s.operator=#{operator}
       <if test="pattern !='ALL' ">
           AND s.pattern=#{pattern}
@@ -39,12 +39,12 @@
       GROUP BY s.timestamp,s.longitude,s.latitude,s.operator
       <if test="pattern !='ALL' ">
           ,s.pattern
-      </if>-->
-      SELECT s.latitude lat,s.longitude lon,
+      </if>
+      <!--SELECT s.latitude lat,s.longitude lon,
       s.rsrp,s.id
       from sw_station_chart_rsrp_data s
       WHERE s.line=#{line} AND s.direction=#{direction}  AND s.date =#{date} AND s.operator=#{operator} AND s.pattern=#{pattern}
-
+    -->
   </select>
 
   <select id="getSaoPinSample" resultType="Map" parameterType="map">
