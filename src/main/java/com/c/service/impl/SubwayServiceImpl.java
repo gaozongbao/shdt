@@ -201,6 +201,7 @@ public class SubwayServiceImpl implements SubwayService {
                 coverParam.put("operator",op);
                 coverParam.put("pattern",type);
                 coverParam.put("type",1);
+                coverParam.put("date",param.get("date"));
                 List<Map<String, Object>> saoPinCoverRate = swSaopinAddrDao.getSaoPinSample(coverParam);
                 if(saoPinCoverRate.size()>0){
                     sampleRes.put(type.toLowerCase()+"Cover",saoPinCoverRate.get(0).get("value"));
@@ -222,6 +223,11 @@ public class SubwayServiceImpl implements SubwayService {
 
 
         return res;
+    }
+
+    @Override
+    public Map<String, Object> getLatestDate() {
+        return swLinesDirectionDao.getLatestDate();
     }
 
 

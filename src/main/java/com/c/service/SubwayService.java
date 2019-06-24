@@ -21,7 +21,7 @@ public interface SubwayService {
      *          pattern --制式  FDD/TDD/GSM/ALL
      *          direction --方向  正向/反向
      *          severPath --服务器路径 用于图片
-     *
+     *          date -- 最新批次时间
      *
      * @return
      *  返回值
@@ -61,4 +61,10 @@ public interface SubwayService {
      * 				}
      */
     public Map<String,Object> getAllDataBySubway(Map<String,Object> param);
+
+    /**
+     * 获取最新批次
+     * @return
+     */
+    public Map<String,Object> getLatestDate();
 }

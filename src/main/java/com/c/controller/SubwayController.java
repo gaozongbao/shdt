@@ -40,9 +40,10 @@ public class SubwayController {
         List<Map<String,Object>> res = new ArrayList<>();
         long s = System.currentTimeMillis();
         String severPath =request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort();
-
+        Map<String, Object> latestDate = subwayService.getLatestDate();
         for (String item: lines) {
             Map<String,Object> param = new HashMap<>();
+            param.put("date",latestDate.get("date"));
             param.put("line",item);
             param.put("operator",operator);
             if(StringUtils.isBlank(pattern)){

@@ -35,7 +35,7 @@
       <if test="pattern !='ALL' ">
           AND s.pattern=#{pattern}
       </if>
-      AND s.date =(SELECT MAX(s.date) FROM sw_saopin_addr s)
+      AND s.date =#{date}
       GROUP BY s.timestamp,s.longitude,s.latitude,s.operator
       <if test="pattern !='ALL' ">
           ,s.pattern
@@ -47,7 +47,7 @@
     SELECT * FROM sw_saopin_sample s
     WHERE s.line=#{line} AND s.direction=#{direction} AND s.operator=#{operator} AND s.pattern=#{pattern}
     AND s.type=#{type}
-    AND s.date =(SELECT MAX(s.date) FROM sw_saopin_sample s)
+    AND s.date =#{date}
     ORDER BY s.index
   </select>
 

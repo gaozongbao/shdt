@@ -35,6 +35,8 @@
 
   </select>
 
-
+  <select id="getLatestDate" resultType="Map">
+    SELECT MAX(`date`) `date` FROM sw_saopin_addr
+  </select>
 
 </mapper>

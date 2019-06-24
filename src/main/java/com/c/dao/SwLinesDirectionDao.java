@@ -25,5 +25,11 @@ public interface SwLinesDirectionDao {
      */
     public List<Map<String,Object>> getStationInfo(@Param("line") String line);
 
+    /**
+     * 获取最新批次
+     * @return
+     */
+    public Map<String,Object>getLatestDate();
+
 
 }
